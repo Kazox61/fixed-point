@@ -231,7 +231,7 @@ namespace Fixed32
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool operator >(FP x, int y)
 		{
-			return x.RawValue >> FractionalBits > y;
+			return x.RawValue > (long)y << FractionalBits;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -249,7 +249,7 @@ namespace Fixed32
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool operator <(FP x, int y)
 		{
-			return x.RawValue >> FractionalBits < y;
+			return x.RawValue < (long)y << FractionalBits;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -267,7 +267,7 @@ namespace Fixed32
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool operator >=(FP x, int y)
 		{
-			return x.RawValue >> FractionalBits >= y;
+			return x.RawValue >= (long)y << FractionalBits;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -285,7 +285,7 @@ namespace Fixed32
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool operator <=(FP x, int y)
 		{
-			return x.RawValue >> FractionalBits <= y;
+			return x.RawValue <= (long)y << FractionalBits;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
