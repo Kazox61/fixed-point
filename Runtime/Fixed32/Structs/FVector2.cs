@@ -273,6 +273,21 @@ namespace Fixed32
 			return a.X * b.Y - a.Y * b.X;
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FVector2 MoveTowards(FVector2 current, FVector2 target, FP maxDistanceDelta)
+		{
+			var direction = target - current;
+
+			var sqrLength = LengthSqr(direction);
+
+			if (sqrLength == FP.Zero || maxDistanceDelta >= FP.Zero && sqrLength <= maxDistanceDelta * maxDistanceDelta)
+				return target;
+
+			var distance = FP.Sqrt(sqrLength);
+
+			return current + direction / distance * maxDistanceDelta;
+		}
+
 		/// <summary>
 		/// Returns the length of a vector.
 		/// </summary>
