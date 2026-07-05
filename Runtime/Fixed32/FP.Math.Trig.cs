@@ -35,7 +35,7 @@ namespace Fixed32
 				rawRadians -= PiRaw; // Map to [0, Pi)
 			}
 
-			var flipHorizontal = rawRadians >= HalfPiRaw;
+			var flipHorizontal = rawRadians > HalfPiRaw;
 			if (flipHorizontal)
 			{
 				rawRadians = PiRaw - rawRadians; // Map to [0, Pi/2]
