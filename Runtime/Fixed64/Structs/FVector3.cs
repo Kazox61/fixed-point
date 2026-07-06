@@ -2,12 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fixed64
-{
+namespace Fixed64 {
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct FVector3 : IEquatable<FVector3>, IFormattable
-	{
+	public struct FVector3 : IEquatable<FVector3>, IFormattable {
 		public FP X;
 		public FP Y;
 		public FP Z;
@@ -16,19 +14,16 @@ namespace Fixed64
 		/// Constructs a vector from three FP values.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public FVector3(FP x, FP y, FP z)
-		{
+		public FVector3(FP x, FP y, FP z) {
 			X = x;
 			Y = y;
 			Z = z;
 		}
 
-		public FP this[int index]
-		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] get
-			{
-				switch (index)
-				{
+		public FP this[int index] {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get {
+				switch (index) {
 					case 0:
 						return X;
 					case 1:
@@ -39,10 +34,9 @@ namespace Fixed64
 						throw new IndexOutOfRangeException();
 				}
 			}
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] set
-			{
-				switch (index)
-				{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set {
+				switch (index) {
 					case 0:
 						X = value;
 						break;
@@ -61,8 +55,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(0, 0, 0).
 		/// </summary>
-		public static FVector3 Zero
-		{
+		public static FVector3 Zero {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.Zero, FP.Zero, FP.Zero);
 		}
@@ -70,8 +63,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(1, 1, 1).
 		/// </summary>
-		public static FVector3 One
-		{
+		public static FVector3 One {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.One, FP.One, FP.One);
 		}
@@ -79,8 +71,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(1, 0, 0).
 		/// </summary>
-		public static FVector3 Right
-		{
+		public static FVector3 Right {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.One, FP.Zero, FP.Zero);
 		}
@@ -88,8 +79,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(-1, 0, 0).
 		/// </summary>
-		public static FVector3 Left
-		{
+		public static FVector3 Left {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.MinusOne, FP.Zero, FP.Zero);
 		}
@@ -97,8 +87,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(0, 1, 0).
 		/// </summary>
-		public static FVector3 Up
-		{
+		public static FVector3 Up {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.Zero, FP.One, FP.Zero);
 		}
@@ -106,8 +95,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(0, -1, 0).
 		/// </summary>
-		public static FVector3 Down
-		{
+		public static FVector3 Down {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.Zero, FP.MinusOne, FP.Zero);
 		}
@@ -115,8 +103,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(0, 0, 1).
 		/// </summary>
-		public static FVector3 Forward
-		{
+		public static FVector3 Forward {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.Zero, FP.Zero, FP.One);
 		}
@@ -124,8 +111,7 @@ namespace Fixed64
 		/// <summary>
 		/// Shorthand for writing FVector3(0, 0, -1).
 		/// </summary>
-		public static FVector3 Backward
-		{
+		public static FVector3 Backward {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FVector3(FP.Zero, FP.Zero, FP.MinusOne);
 		}
@@ -140,8 +126,7 @@ namespace Fixed64
 		/// Returns true if the given vector is exactly equal to this vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool Equals(FVector3 other)
-		{
+		public bool Equals(FVector3 other) {
 			return X == other.X && Y == other.Y && Z == other.Z;
 		}
 
@@ -153,8 +138,7 @@ namespace Fixed64
 
 		public string ToString(IFormatProvider provider) => ToString("F2", provider);
 
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
+		public string ToString(string format, IFormatProvider formatProvider) {
 			return string.Format("({0}, {1}, {2})", X.ToString(format, formatProvider),
 				Y.ToString(format, formatProvider), Z.ToString(format, formatProvider));
 		}
@@ -166,8 +150,7 @@ namespace Fixed64
 		/// Returns the componentwise addition.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator +(FVector3 a, FVector3 b)
-		{
+		public static FVector3 operator +(FVector3 a, FVector3 b) {
 			return new FVector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 		}
 
@@ -175,8 +158,7 @@ namespace Fixed64
 		/// Returns the componentwise addition.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator +(FVector3 a, FP b)
-		{
+		public static FVector3 operator +(FVector3 a, FP b) {
 			return new FVector3(a.X + b, a.Y + b, a.Z + b);
 		}
 
@@ -184,8 +166,7 @@ namespace Fixed64
 		/// Returns the componentwise addition.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator +(FP a, FVector3 b)
-		{
+		public static FVector3 operator +(FP a, FVector3 b) {
 			return b + a;
 		}
 
@@ -193,8 +174,7 @@ namespace Fixed64
 		/// Returns the componentwise negotiation.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator -(FVector3 a)
-		{
+		public static FVector3 operator -(FVector3 a) {
 			return new FVector3(-a.X, -a.Y, -a.Z);
 		}
 
@@ -202,8 +182,7 @@ namespace Fixed64
 		/// Returns the componentwise subtraction.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator -(FVector3 a, FVector3 b)
-		{
+		public static FVector3 operator -(FVector3 a, FVector3 b) {
 			return -b + a;
 		}
 
@@ -211,8 +190,7 @@ namespace Fixed64
 		/// Returns the componentwise subtraction.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator -(FVector3 a, FP b)
-		{
+		public static FVector3 operator -(FVector3 a, FP b) {
 			return -b + a;
 		}
 
@@ -220,8 +198,7 @@ namespace Fixed64
 		/// Returns the componentwise subtraction.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator -(FP a, FVector3 b)
-		{
+		public static FVector3 operator -(FP a, FVector3 b) {
 			return -b + a;
 		}
 
@@ -229,8 +206,7 @@ namespace Fixed64
 		/// Returns the componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator *(FVector3 a, FVector3 b)
-		{
+		public static FVector3 operator *(FVector3 a, FVector3 b) {
 			return new FVector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z);
 		}
 
@@ -238,8 +214,7 @@ namespace Fixed64
 		/// Returns the componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator *(FVector3 a, FP b)
-		{
+		public static FVector3 operator *(FVector3 a, FP b) {
 			return new FVector3(a.X * b, a.Y * b, a.Z * b);
 		}
 
@@ -247,8 +222,7 @@ namespace Fixed64
 		/// Returns the componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator *(FP a, FVector3 b)
-		{
+		public static FVector3 operator *(FP a, FVector3 b) {
 			return b * a;
 		}
 
@@ -256,8 +230,7 @@ namespace Fixed64
 		/// Returns the componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator *(FVector3 a, int b)
-		{
+		public static FVector3 operator *(FVector3 a, int b) {
 			return new FVector3(a.X * b, a.Y * b, a.Z * b);
 		}
 
@@ -265,8 +238,7 @@ namespace Fixed64
 		/// Returns the componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator *(int b, FVector3 a)
-		{
+		public static FVector3 operator *(int b, FVector3 a) {
 			return a * b;
 		}
 
@@ -274,8 +246,7 @@ namespace Fixed64
 		/// Returns the componentwise division.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator /(FVector3 a, FVector3 b)
-		{
+		public static FVector3 operator /(FVector3 a, FVector3 b) {
 			return new FVector3(a.X / b.X, a.Y / b.Y, a.Z / b.Z);
 		}
 
@@ -283,8 +254,7 @@ namespace Fixed64
 		/// Returns the componentwise division.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator /(FVector3 a, FP b)
-		{
+		public static FVector3 operator /(FVector3 a, FP b) {
 			var invB = FP.One / b;
 			return new FVector3(a.X * invB, a.Y * invB, a.Z * invB);
 		}
@@ -293,8 +263,7 @@ namespace Fixed64
 		/// Returns the componentwise division.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 operator /(FVector3 a, int b)
-		{
+		public static FVector3 operator /(FVector3 a, int b) {
 			return new FVector3(a.X / b, a.Y / b, a.Z / b);
 		}
 
@@ -314,8 +283,7 @@ namespace Fixed64
 		/// Returns the dot product of two vectors.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP Dot(FVector3 a, FVector3 b)
-		{
+		public static FP Dot(FVector3 a, FVector3 b) {
 			return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
 		}
 
@@ -323,14 +291,12 @@ namespace Fixed64
 		/// Returns the cross product of two vectors.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 Cross(FVector3 a, FVector3 b)
-		{
+		public static FVector3 Cross(FVector3 a, FVector3 b) {
 			return new FVector3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 MoveTowards(FVector3 current, FVector3 target, FP maxDistanceDelta)
-		{
+		public static FVector3 MoveTowards(FVector3 current, FVector3 target, FP maxDistanceDelta) {
 			var direction = target - current;
 
 			var sqrLength = LengthSqr(direction);
@@ -347,8 +313,7 @@ namespace Fixed64
 		/// Returns the length of a vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP Length(FVector3 a)
-		{
+		public static FP Length(FVector3 a) {
 			return FP.Sqrt(LengthSqr(a));
 		}
 
@@ -356,8 +321,7 @@ namespace Fixed64
 		/// Returns the squared length of a vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP LengthSqr(FVector3 a)
-		{
+		public static FP LengthSqr(FVector3 a) {
 			return Dot(a, a);
 		}
 
@@ -365,8 +329,7 @@ namespace Fixed64
 		/// Returns the distance between a and b.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP Distance(FVector3 a, FVector3 b)
-		{
+		public static FP Distance(FVector3 a, FVector3 b) {
 			return FP.Sqrt(DistanceSqr(a, b));
 		}
 
@@ -374,8 +337,7 @@ namespace Fixed64
 		/// Returns the squared distance between a and b.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP DistanceSqr(FVector3 a, FVector3 b)
-		{
+		public static FP DistanceSqr(FVector3 a, FVector3 b) {
 			var deltaX = a.X - b.X;
 			var deltaY = a.Y - b.Y;
 			var deltaZ = a.Z - b.Z;
@@ -386,8 +348,7 @@ namespace Fixed64
 		/// Returns a normalized version of a vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 Normalize(FVector3 a)
-		{
+		public static FVector3 Normalize(FVector3 a) {
 			var length = Length(a);
 			return a / length;
 		}
@@ -397,11 +358,9 @@ namespace Fixed64
 		/// Returns the given default value when vector length close to zero.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 NormalizeSafe(FVector3 a, FVector3 defaultValue = new FVector3())
-		{
+		public static FVector3 NormalizeSafe(FVector3 a, FVector3 defaultValue = new FVector3()) {
 			var length = Length(a);
-			if (length == FP.Zero)
-			{
+			if (length == FP.Zero) {
 				return defaultValue;
 			}
 			return a / length;
@@ -411,8 +370,7 @@ namespace Fixed64
 		/// Returns non-normalized perpendicular vector to a given one. For normalized see <see cref="Orthonormal"/>.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 Orthogonal(FVector3 a)
-		{
+		public static FVector3 Orthogonal(FVector3 a) {
 			return new FVector3(
 				FP.CopySign(a.Z, a.X),
 				FP.CopySign(a.Z, a.Y),
@@ -423,8 +381,7 @@ namespace Fixed64
 		/// Returns orthogonal basis vector to a given one.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 Orthonormal(FVector3 a)
-		{
+		public static FVector3 Orthonormal(FVector3 a) {
 			var length = Length(a);
 			var s = FP.CopySign(length, a.Z);
 			var h = a.Z + s;
@@ -435,8 +392,7 @@ namespace Fixed64
 		/// Returns a vector that is made from the largest components of two vectors.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 MaxComponents(FVector3 a, FVector3 b)
-		{
+		public static FVector3 MaxComponents(FVector3 a, FVector3 b) {
 			return new FVector3(FP.Max(a.X, b.X), FP.Max(a.Y, b.Y), FP.Max(a.Z, b.Z));
 		}
 
@@ -444,8 +400,7 @@ namespace Fixed64
 		/// Returns a vector that is made from the smallest components of two vectors.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 MinComponents(FVector3 a, FVector3 b)
-		{
+		public static FVector3 MinComponents(FVector3 a, FVector3 b) {
 			return new FVector3(FP.Min(a.X, b.X), FP.Min(a.Y, b.Y), FP.Min(a.Z, b.Z));
 		}
 
@@ -453,8 +408,7 @@ namespace Fixed64
 		/// Returns the componentwise absolute value of a vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 AbsComponents(FVector3 a)
-		{
+		public static FVector3 AbsComponents(FVector3 a) {
 			return new FVector3(FP.Abs(a.X), FP.Abs(a.Y), FP.Abs(a.Z));
 		}
 
@@ -462,8 +416,7 @@ namespace Fixed64
 		/// Returns the componentwise signes of a vector.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FVector3 SignComponents(FVector3 a)
-		{
+		public static FVector3 SignComponents(FVector3 a) {
 			return new FVector3(FP.Sign(a.X), FP.Sign(a.Y), FP.Sign(a.Z));
 		}
 
@@ -471,8 +424,7 @@ namespace Fixed64
 		/// Compares two vectors with <see cref="FP.CalculationsEpsilonSqr"/> and returns true if they are similar.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool ApproximatelyEqual(FVector3 a, FVector3 b)
-		{
+		public static bool ApproximatelyEqual(FVector3 a, FVector3 b) {
 			return ApproximatelyEqual(a, b, FP.CalculationsEpsilonSqr);
 		}
 
@@ -480,8 +432,7 @@ namespace Fixed64
 		/// Compares two vectors with some epsilon and returns true if they are similar.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool ApproximatelyEqual(FVector3 a, FVector3 b, FP epsilon)
-		{
+		public static bool ApproximatelyEqual(FVector3 a, FVector3 b, FP epsilon) {
 			return DistanceSqr(a, b) < epsilon;
 		}
 	}

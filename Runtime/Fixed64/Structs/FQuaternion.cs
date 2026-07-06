@@ -2,12 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fixed64
-{
+namespace Fixed64 {
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct FQuaternion : IEquatable<FQuaternion>, IFormattable
-	{
+	public struct FQuaternion : IEquatable<FQuaternion>, IFormattable {
 		public FP X;
 		public FP Y;
 		public FP Z;
@@ -17,8 +15,7 @@ namespace Fixed64
 		/// Constructs a unit quaternion from four FP values. Use if you know what you are doing.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public FQuaternion(FP x, FP y, FP z, FP w)
-		{
+		public FQuaternion(FP x, FP y, FP z, FP w) {
 			X = x;
 			Y = y;
 			Z = z;
@@ -28,8 +25,7 @@ namespace Fixed64
 		/// <summary>
 		/// The identity rotation.
 		/// </summary>
-		public static FQuaternion Identity
-		{
+		public static FQuaternion Identity {
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			get => new FQuaternion(FP.Zero, FP.Zero, FP.Zero, FP.One);
 		}
@@ -44,8 +40,7 @@ namespace Fixed64
 		/// Returns true if the given quaternion is exactly equal to this quaternion.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public bool Equals(FQuaternion other)
-		{
+		public bool Equals(FQuaternion other) {
 			return X == other.X && Y == other.Y && Z == other.Z && W == other.W;
 		}
 
@@ -57,8 +52,7 @@ namespace Fixed64
 
 		public string ToString(IFormatProvider provider) => ToString("F2", provider);
 
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
+		public string ToString(string format, IFormatProvider formatProvider) {
 			return string.Format("({0}, {1}, {2}, {3})", X.ToString(format, formatProvider),
 				Y.ToString(format, formatProvider), Z.ToString(format, formatProvider),
 				Y.ToString(format, formatProvider));
@@ -71,8 +65,7 @@ namespace Fixed64
 		/// The componentwise addition.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator +(FQuaternion a, FQuaternion b)
-		{
+		public static FQuaternion operator +(FQuaternion a, FQuaternion b) {
 			return new FQuaternion(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.W + b.W);
 		}
 
@@ -80,8 +73,7 @@ namespace Fixed64
 		/// The componentwise negotiation.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator -(FQuaternion a)
-		{
+		public static FQuaternion operator -(FQuaternion a) {
 			return new FQuaternion(-a.X, -a.Y, -a.Z, -a.W);
 		}
 
@@ -89,8 +81,7 @@ namespace Fixed64
 		/// The componentwise subtraction.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator -(FQuaternion a, FQuaternion b)
-		{
+		public static FQuaternion operator -(FQuaternion a, FQuaternion b) {
 			return -b + a;
 		}
 
@@ -98,8 +89,7 @@ namespace Fixed64
 		/// The quaternions multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator *(FQuaternion a, FQuaternion b)
-		{
+		public static FQuaternion operator *(FQuaternion a, FQuaternion b) {
 			return new FQuaternion(
 				a.W * b.X + a.X * b.W + a.Y * b.Z - a.Z * b.Y,
 				a.W * b.Y + a.Y * b.W + a.Z * b.X - a.X * b.Z,
@@ -111,8 +101,7 @@ namespace Fixed64
 		/// The componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator *(FQuaternion a, FP b)
-		{
+		public static FQuaternion operator *(FQuaternion a, FP b) {
 			return new FQuaternion(a.X * b, a.Y * b, a.Z * b, a.W * b);
 		}
 
@@ -120,16 +109,14 @@ namespace Fixed64
 		/// The componentwise multiplication.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator *(FP b, FQuaternion a)
-		{
+		public static FQuaternion operator *(FP b, FQuaternion a) {
 			return new FQuaternion(a.X * b, a.Y * b, a.Z * b, a.W * b);
 		}
 
 		/// <summary>
 		/// Rotate vector by the quaternion. Valid only for normalized quaternions.
 		/// </summary>
-		public static FVector3 operator *(FQuaternion unitQuaternion, FVector3 vector)
-		{
+		public static FVector3 operator *(FQuaternion unitQuaternion, FVector3 vector) {
 			var twoX = unitQuaternion.X * 2;
 			var twoY = unitQuaternion.Y * 2;
 			var twoZ = unitQuaternion.Z * 2;
@@ -153,8 +140,7 @@ namespace Fixed64
 		/// Returns the vector transformed by the quaternion, including scale and rotation.
 		/// Also known as sandwich product: q * vec * conj(q)
 		/// </summary>
-		public static FVector3 Sandwich(FQuaternion quaternion, FVector3 vector)
-		{
+		public static FVector3 Sandwich(FQuaternion quaternion, FVector3 vector) {
 			var twoX = quaternion.X * 2;
 			var twoY = quaternion.Y * 2;
 			var twoZ = quaternion.Z * 2;
@@ -179,8 +165,7 @@ namespace Fixed64
 		/// The quaternions division.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator /(FQuaternion a, FQuaternion b)
-		{
+		public static FQuaternion operator /(FQuaternion a, FQuaternion b) {
 			return a * Inverse(b);
 		}
 
@@ -188,8 +173,7 @@ namespace Fixed64
 		/// The componentwise division.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion operator /(FQuaternion a, FP b)
-		{
+		public static FQuaternion operator /(FQuaternion a, FP b) {
 			var invB = FP.One / b;
 			return new FQuaternion(a.X * invB, a.Y * invB, a.Z * invB, a.W * invB);
 		}
@@ -210,8 +194,7 @@ namespace Fixed64
 		/// The dot product between two rotations.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP Dot(FQuaternion a, FQuaternion b)
-		{
+		public static FP Dot(FQuaternion a, FQuaternion b) {
 			return a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W;
 		}
 
@@ -219,8 +202,7 @@ namespace Fixed64
 		/// The length of a quaternion.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP Length(FQuaternion a)
-		{
+		public static FP Length(FQuaternion a) {
 			return FP.Sqrt(LengthSqr(a));
 		}
 
@@ -228,8 +210,7 @@ namespace Fixed64
 		/// The squared length of a quaternion.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP LengthSqr(FQuaternion a)
-		{
+		public static FP LengthSqr(FQuaternion a) {
 			return Dot(a, a);
 		}
 
@@ -237,8 +218,7 @@ namespace Fixed64
 		/// The inverse of a quaternion.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion Inverse(FQuaternion a)
-		{
+		public static FQuaternion Inverse(FQuaternion a) {
 			return new FQuaternion(-a.X, -a.Y, -a.Z, a.W);
 		}
 
@@ -246,31 +226,25 @@ namespace Fixed64
 		/// Returns a spherical interpolation between two quaternions.
 		/// Non-commutative, torque-minimal, constant velocity.
 		/// </summary>
-		public static FQuaternion Slerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false)
-		{
+		public static FQuaternion Slerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false) {
 			// Calculate angle between them.
 			var cosHalfTheta = Dot(a, b);
 
-			if (intPath)
-			{
-				if (cosHalfTheta > FP.Zero)
-				{
+			if (intPath) {
+				if (cosHalfTheta > FP.Zero) {
 					b = -b;
 					cosHalfTheta = -cosHalfTheta;
 				}
 			}
-			else
-			{
-				if (cosHalfTheta < FP.Zero)
-				{
+			else {
+				if (cosHalfTheta < FP.Zero) {
 					b = -b;
 					cosHalfTheta = -cosHalfTheta;
 				}
 			}
 
 			// If a = b or a = b then theta = 0 then we can return interpolation between a and b.
-			if (FP.Abs(cosHalfTheta) > FP.One - FP.CalculationsEpsilon)
-			{
+			if (FP.Abs(cosHalfTheta) > FP.One - FP.CalculationsEpsilon) {
 				return Nlerp(a, b, t, intPath);
 			}
 
@@ -288,29 +262,23 @@ namespace Fixed64
 		/// Commutative, torque-minimal, non-constant velocity.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion Nlerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false)
-		{
+		public static FQuaternion Nlerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false) {
 			return NormalizeSafe(Lerp(a, b, t, intPath));
 		}
 
 		/// <summary>
 		/// Returns a componentwise interpolation between two quaternions.
 		/// </summary>
-		public static FQuaternion Lerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false)
-		{
+		public static FQuaternion Lerp(FQuaternion a, FQuaternion b, FP t, bool intPath = false) {
 			var dot = Dot(a, b);
 
-			if (intPath)
-			{
-				if (dot > FP.Zero)
-				{
+			if (intPath) {
+				if (dot > FP.Zero) {
 					b = -b;
 				}
 			}
-			else
-			{
-				if (dot < FP.Zero)
-				{
+			else {
+				if (dot < FP.Zero) {
 					b = -b;
 				}
 			}
@@ -323,8 +291,7 @@ namespace Fixed64
 		/// If inputs are zero length or collinear or have some other weirdness,
 		/// then rotation result will be some mix of <see cref="FVector3.Forward"/> and <see cref="FVector3.Up"/> vectors.
 		/// </summary>
-		public static FQuaternion LookRotation(FVector3 forward, FVector3 up)
-		{
+		public static FQuaternion LookRotation(FVector3 forward, FVector3 up) {
 			// Third matrix column
 			var lookAt = FVector3.NormalizeSafe(forward, FVector3.Forward);
 			// First matrix column
@@ -338,14 +305,12 @@ namespace Fixed64
 			var trace3 = FP.One - sideAxis.X - rotatedUp.Y + lookAt.Z;
 
 			// If orthonormal vectors forms identity matrix, then return identity rotation
-			if (trace1 + trace2 + trace3 < FP.CalculationsEpsilon)
-			{
+			if (trace1 + trace2 + trace3 < FP.CalculationsEpsilon) {
 				return Identity;
 			}
 
 			// Choose largest diagonal
-			if (trace1 + FP.CalculationsEpsilon > trace2 && trace1 + FP.CalculationsEpsilon > trace3)
-			{
+			if (trace1 + FP.CalculationsEpsilon > trace2 && trace1 + FP.CalculationsEpsilon > trace3) {
 				var s = FP.Sqrt(trace1) * 2;
 				var invS = FP.One / s;
 				return new FQuaternion(
@@ -354,8 +319,7 @@ namespace Fixed64
 					(lookAt.X + sideAxis.Z) * invS,
 					(rotatedUp.Z - lookAt.Y) * invS);
 			}
-			else if (trace2 + FP.CalculationsEpsilon > trace1 && trace2 + FP.CalculationsEpsilon > trace3)
-			{
+			else if (trace2 + FP.CalculationsEpsilon > trace1 && trace2 + FP.CalculationsEpsilon > trace3) {
 				var s = FP.Sqrt(trace2) * 2;
 				var invS = FP.One / s;
 				return new FQuaternion(
@@ -364,8 +328,7 @@ namespace Fixed64
 					(lookAt.Y + rotatedUp.Z) * invS,
 					(lookAt.X - sideAxis.Z) * invS);
 			}
-			else
-			{
+			else {
 				var s = FP.Sqrt(trace3) * 2;
 				var invS = FP.One / s;
 				return new FQuaternion(
@@ -382,8 +345,7 @@ namespace Fixed64
 		/// If input vector is zero length then rotation will be around forward axis.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion AxisAngleRadians(FVector3 axis, FP angle)
-		{
+		public static FQuaternion AxisAngleRadians(FVector3 axis, FP angle) {
 			axis = FVector3.NormalizeSafe(axis, FVector3.Forward);
 			var sin = FP.Sin(FP.Half * angle);
 			var cos = FP.Cos(FP.Half * angle);
@@ -394,8 +356,7 @@ namespace Fixed64
 		/// Returns a quaternion representing a euler angle in radians.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion EulerRadians(FVector3 angle)
-		{
+		public static FQuaternion EulerRadians(FVector3 angle) {
 			var cr = FP.Cos(angle.X * FP.Half);
 			var sr = FP.Sin(angle.X * FP.Half);
 			var cp = FP.Cos(angle.Y * FP.Half);
@@ -416,8 +377,7 @@ namespace Fixed64
 		/// /// If input vector is zero length then rotation will be around forward axis.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion AxisAngleDegrees(FVector3 axis, FP angle)
-		{
+		public static FQuaternion AxisAngleDegrees(FVector3 axis, FP angle) {
 			axis = FVector3.NormalizeSafe(axis, FVector3.Forward);
 			var sin = FP.Sin(FP.Half * angle * FP.Deg2Rad);
 			var cos = FP.Cos(FP.Half * angle * FP.Deg2Rad);
@@ -428,8 +388,7 @@ namespace Fixed64
 		/// Compares two quaternions with <see cref="FP.CalculationsEpsilonSqr"/> and returns true if they are similar.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool ApproximatelyEqual(FQuaternion a, FQuaternion b)
-		{
+		public static bool ApproximatelyEqual(FQuaternion a, FQuaternion b) {
 			return ApproximatelyEqual(a, b, FP.CalculationsEpsilonSqr);
 		}
 
@@ -437,8 +396,7 @@ namespace Fixed64
 		/// Compares two quaternions with some epsilon and returns true if they are similar.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool ApproximatelyEqual(FQuaternion a, FQuaternion b, FP epsilon)
-		{
+		public static bool ApproximatelyEqual(FQuaternion a, FQuaternion b, FP epsilon) {
 			return FP.Abs(Dot(a, b)) > FP.One - epsilon;
 		}
 
@@ -446,8 +404,7 @@ namespace Fixed64
 		/// Returns a normalized version of a quaternion.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion Normalize(FQuaternion a)
-		{
+		public static FQuaternion Normalize(FQuaternion a) {
 			var length = Length(a);
 			return a / length;
 		}
@@ -457,8 +414,7 @@ namespace Fixed64
 		/// Returns the <see cref="Identity"/> when quaternion length close to zero.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion NormalizeSafe(FQuaternion a)
-		{
+		public static FQuaternion NormalizeSafe(FQuaternion a) {
 			return NormalizeSafe(a, Identity);
 		}
 
@@ -467,11 +423,9 @@ namespace Fixed64
 		/// Returns the given default value when quaternion length close to zero.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion NormalizeSafe(FQuaternion a, FQuaternion defaultValue)
-		{
+		public static FQuaternion NormalizeSafe(FQuaternion a, FQuaternion defaultValue) {
 			var sqrLength = LengthSqr(a);
-			if (sqrLength < FP.CalculationsEpsilonSqr)
-			{
+			if (sqrLength < FP.CalculationsEpsilonSqr) {
 				return defaultValue;
 			}
 			return a / FP.Sqrt(sqrLength);
@@ -481,14 +435,105 @@ namespace Fixed64
 		/// Check quaternion for normalization precision error and re-normalize it if needed.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FQuaternion EnsureNormalization(FQuaternion a)
-		{
+		public static FQuaternion EnsureNormalization(FQuaternion a) {
 			var lengthSqr = LengthSqr(a);
-			if (FP.Abs(FP.One - lengthSqr) > FP.CalculationsEpsilonSqr)
-			{
+			if (FP.Abs(FP.One - lengthSqr) > FP.CalculationsEpsilonSqr) {
 				return a / FP.Sqrt(lengthSqr);
 			}
 			return a;
+		}
+
+		/// <summary>
+		/// First-order integration of a rotation by an angular velocity (radians/sec) times a time step.
+		/// https://fgiesen.wordpress.com/2012/08/24/quaternion-differentiation/
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FQuaternion IntegrateRotation(FQuaternion q1, FVector3 deltaRotation) {
+			var qd = new FQuaternion(FP.Half * deltaRotation.X, FP.Half * deltaRotation.Y, FP.Half * deltaRotation.Z, FP.Zero);
+			qd *= q1;
+			var q2 = new FQuaternion(q1.X + qd.X, q1.Y + qd.Y, q1.Z + qd.Z, q1.W + qd.W);
+			return NormalizeSafe(q2);
+		}
+
+		/// <summary>
+		/// Does this quaternion have unit length?
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool IsNormalized(FQuaternion a) {
+			return FP.Abs(FP.One - LengthSqr(a)) < FP.CalculationsEpsilonSqr;
+		}
+
+		/// <summary>
+		/// Find a quaternion that rotates one unit vector to another.
+		/// </summary>
+		public static FQuaternion ComputeBetweenUnitVectors(FVector3 v1, FVector3 v2) {
+			var m = (v1 + v2) * FP.Half;
+
+			FQuaternion result;
+			if (FVector3.LengthSqr(m) > FP.CalculationsEpsilonSqr) {
+				var cross = FVector3.Cross(v1, m);
+				result = new FQuaternion(cross.X, cross.Y, cross.Z, FVector3.Dot(v1, m));
+			}
+			else {
+				// Anti-parallel: use a perpendicular vector
+				FVector3 v;
+				if (FP.Abs(v1.X) > FP.Half) {
+					v = new FVector3(v1.Y, -v1.X, FP.Zero);
+				}
+				else {
+					v = new FVector3(FP.Zero, v1.Z, -v1.Y);
+				}
+
+				result = new FQuaternion(v.X, v.Y, v.Z, FP.Zero);
+			}
+
+			// The algorithm is simplified and made more accurate by normalizing at the end
+			return NormalizeSafe(result);
+		}
+
+		/// <summary>
+		/// Get the axis and angle from a quaternion. Assumes the quaternion is normalized.
+		/// </summary>
+		public static FVector3 GetAxisAngle(FQuaternion q, out FP radians) {
+			var length = FP.Sqrt(q.X * q.X + q.Y * q.Y + q.Z * q.Z);
+			radians = 2 * FP.Atan2(length, q.W);
+
+			if (length > FP.Zero) {
+				var invLength = FP.One / length;
+				return new FVector3(q.X * invLength, q.Y * invLength, q.Z * invLength);
+			}
+
+			return FVector3.Zero;
+		}
+
+		/// <summary>
+		/// Get the angle for a quaternion in radians. Assumes the quaternion is normalized.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP GetAngle(FQuaternion q) {
+			var length = FP.Sqrt(q.X * q.X + q.Y * q.Y + q.Z * q.Z);
+			return 2 * FP.Atan2(length, q.W);
+		}
+
+		/// <summary>
+		/// Twist angle around the z-axis, used for twist limit and revolute angle limit.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP GetTwistAngle(FQuaternion q) {
+			// Account for polarity to keep the twist angle in range.
+			var twist = q.W < FP.Zero ? FP.Atan2(-q.Z, -q.W) : FP.Atan2(q.Z, q.W);
+			return twist * 2;
+		}
+
+		/// <summary>
+		/// Swing angle used for cone limit.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP GetSwingAngle(FQuaternion q) {
+			// Polarity should not matter because all terms are squared.
+			var x = FP.Sqrt(q.Z * q.Z + q.W * q.W);
+			var y = FP.Sqrt(q.X * q.X + q.Y * q.Y);
+			return 2 * FP.Atan2(y, x);
 		}
 	}
 }
