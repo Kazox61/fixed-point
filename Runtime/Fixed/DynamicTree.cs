@@ -21,11 +21,27 @@ namespace Fixed
 		public TreeNode[] Nodes { get; private set; } = Array.Empty<TreeNode>();
 		public int NodesCapacity { get; private set; }
 		public int NodesCount { get; private set; }
-		public int FreeList { set; private get; } = NullIndex;
+		public int FreeList { get; set; } = NullIndex;
 
 		public int Root { get; private set; } = NullIndex;
 
 		public int ProxyCount { get; private set; }
+
+		/// <summary>
+		/// Fully reconstructs internal state from previously captured field values (Nodes,
+		/// NodesCapacity, NodesCount, FreeList, Root, ProxyCount are all otherwise read-only or
+		/// write-only from outside the class). The one explicit "load a snapshot into me" entry
+		/// point -- normal mutation still only happens through CreateProxy/DestroyProxy/MoveProxy.
+		/// </summary>
+		public void RestoreState(TreeNode[] nodes, int nodesCapacity, int nodesCount, int freeList, int root, int proxyCount)
+		{
+			Nodes = nodes;
+			NodesCapacity = nodesCapacity;
+			NodesCount = nodesCount;
+			FreeList = freeList;
+			Root = root;
+			ProxyCount = proxyCount;
+		}
 
 		private readonly Stack<int> _stack = new Stack<int>(1024);
 
