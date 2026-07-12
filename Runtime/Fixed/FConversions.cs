@@ -6,7 +6,6 @@ using Fixed32;
 namespace Fixed {
 	public static class FConversions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-<<<<<<< HEAD
 		public static Fixed64.FP To64(this FP value)
 		{
 #pragma warning disable CS0162 // Unreachable code detected
@@ -17,21 +16,11 @@ namespace Fixed {
 			else
 			{
 				return Fixed64.FP.FromRaw((long)value.RawValue >> (FP.FractionalBits - Fixed64.FP.FractionalBits));
-=======
-		public static FP64 To64(this FP32 value) {
-#pragma warning disable CS0162 // Unreachable code detected
-			if (FP64.FractionalBits - FP32.FractionalBits >= 0) {
-				return FP64.FromRaw((long)value.RawValue << (FP64.FractionalBits - FP32.FractionalBits));
-			}
-			else {
-				return FP64.FromRaw((long)value.RawValue >> (FP32.FractionalBits - FP64.FractionalBits));
->>>>>>> d0c32a2 (Add math for box3d physics)
 			}
 #pragma warning restore CS0162 // Unreachable code detected
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-<<<<<<< HEAD
 		public static FP To32(this Fixed64.FP value)
 		{
 #pragma warning disable CS0162 // Unreachable code detected
@@ -42,20 +31,10 @@ namespace Fixed {
 			else
 			{
 				return FP.FromRaw((int)(value.RawValue << (FP.FractionalBits - Fixed64.FP.FractionalBits)));
-=======
-		public static FP32 To32(this FP64 value) {
-#pragma warning disable CS0162 // Unreachable code detected
-			if (FP64.FractionalBits - FP32.FractionalBits >= 0) {
-				return FP32.FromRaw((int)(value.RawValue >> (FP64.FractionalBits - FP32.FractionalBits)));
-			}
-			else {
-				return FP32.FromRaw((int)(value.RawValue << (FP32.FractionalBits - FP64.FractionalBits)));
->>>>>>> d0c32a2 (Add math for box3d physics)
 			}
 #pragma warning restore CS0162 // Unreachable code detected
 		}
 
-<<<<<<< HEAD
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Fixed64.FVector2 To64(this FVector2 value)
 			=> new Fixed64.FVector2(value.X.To64(), value.Y.To64());
@@ -111,41 +90,5 @@ namespace Fixed {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static FRotation2D To32(this Fixed64.FRotation2D value)
 			=> new FRotation2D { Sin = value.Sin.To32(), OneMinusCos = value.OneMinusCos.To32() };
-=======
-		/// <summary>
-		/// Narrow a 64-bit value to 32-bit, rounding toward negative infinity. This is exactly what
-		/// <see cref="To32"/> already does (a right-shift on a signed integer floors), named here so
-		/// the intent at a precision boundary (e.g. building a conservative bounding box) is explicit.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP32 ToFP32Floor(this FP64 value) {
-			return value.To32();
-		}
-
-		/// <summary>
-		/// Narrow a 64-bit value to 32-bit, rounding toward positive infinity. Use with
-		/// <see cref="ToFP32Floor"/> to build a conservative box that always contains the 64-bit
-		/// bounds, where a plain narrowing conversion could clip.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static FP32 ToFP32Ceil(this FP64 value) {
-#pragma warning disable CS0162 // Unreachable code detected
-			if (FP64.FractionalBits - FP32.FractionalBits >= 0) {
-				var shift = FP64.FractionalBits - FP32.FractionalBits;
-				var mask = (1L << shift) - 1;
-				var floored = value.RawValue >> shift;
-				if ((value.RawValue & mask) != 0) {
-					floored += 1;
-				}
-
-				return FP32.FromRaw((int)floored);
-			}
-			else {
-				// Widening: no precision is lost, so ceiling and floor coincide.
-				return value.To32();
-			}
-#pragma warning restore CS0162 // Unreachable code detected
-		}
->>>>>>> d0c32a2 (Add math for box3d physics)
 	}
 }
