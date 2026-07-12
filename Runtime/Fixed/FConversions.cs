@@ -36,6 +36,42 @@ namespace Fixed {
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP ToFP32Floor(this Fixed64.FP value)
+		{
+#pragma warning disable CS0162 // Unreachable code detected
+			if (Fixed64.FP.FractionalBits - FP.FractionalBits >= 0)
+			{
+				return FP.FromRaw((int)(value.RawValue >> (Fixed64.FP.FractionalBits - FP.FractionalBits)));
+			}
+			else
+			{
+				return FP.FromRaw((int)(value.RawValue << (FP.FractionalBits - Fixed64.FP.FractionalBits)));
+			}
+#pragma warning restore CS0162 // Unreachable code detected
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP ToFP32Ceil(this Fixed64.FP value)
+		{
+#pragma warning disable CS0162 // Unreachable code detected
+			if (Fixed64.FP.FractionalBits - FP.FractionalBits >= 0)
+			{
+				var shift = Fixed64.FP.FractionalBits - FP.FractionalBits;
+				var raw = value.RawValue >> shift;
+				if ((value.RawValue & ((1L << shift) - 1)) != 0)
+				{
+					raw += 1;
+				}
+				return FP.FromRaw((int)raw);
+			}
+			else
+			{
+				return FP.FromRaw((int)(value.RawValue << (FP.FractionalBits - Fixed64.FP.FractionalBits)));
+			}
+#pragma warning restore CS0162 // Unreachable code detected
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Fixed64.FVector2 To64(this FVector2 value)
 			=> new Fixed64.FVector2(value.X.To64(), value.Y.To64());
 
