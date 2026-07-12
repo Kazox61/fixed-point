@@ -48,7 +48,7 @@ namespace Fixed32
 			{
 				if (x < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(x), "Negative value passed to Sqrt.");
+					throw new ArgumentOutOfRangeException(nameof(x), x, "Negative value passed to Sqrt.");
 				}
 				return sqrtLut[x >> SqrtLutShift01];
 			}
