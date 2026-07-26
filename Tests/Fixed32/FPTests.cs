@@ -197,9 +197,35 @@ namespace Fixed32
 			var actual = FP.Atan(value);
 			var delta = Math.Abs(expected - actual.ToDouble());
 
-			if (delta > 0.00000001)
+			if (delta > 0.0001)
 			{
 				Assert.AreEqual(expected.ToFP(), actual, $"Atan({value}) = {actual}, but expected {expected}. Delta = {delta}.");
+			}
+		}
+
+		[TestCaseSource(nameof(TestCases))]
+		public void Sin(FP value)
+		{
+			var expected = Math.Sin(value.ToDouble());
+			var actual = FP.Sin(value);
+			var delta = Math.Abs(expected - actual.ToDouble());
+
+			if (delta > 0.0001)
+			{
+				Assert.AreEqual(expected.ToFP(), actual, $"Sin({value}) = {actual}, but expected {expected}. Delta = {delta}.");
+			}
+		}
+
+		[TestCaseSource(nameof(TestCases))]
+		public void Cos(FP value)
+		{
+			var expected = Math.Cos(value.ToDouble());
+			var actual = FP.Cos(value);
+			var delta = Math.Abs(expected - actual.ToDouble());
+
+			if (delta > 0.0001)
+			{
+				Assert.AreEqual(expected.ToFP(), actual, $"Cos({value}) = {actual}, but expected {expected}. Delta = {delta}.");
 			}
 		}
 

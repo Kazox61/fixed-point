@@ -66,7 +66,7 @@
 
 			for (var i = 0; i < SinLutSize; i++)
 			{
-				var angle = i.ToFP() / (SinLutSize - 1) * HalfPi;
+				var angle = FromRaw((int)((long)HalfPiRaw * i / (SinLutSize - 1)));
 
 				FCordic.SinCosZeroToHalfPi(angle.RawValue, out var sin, out var cos);
 
@@ -83,7 +83,7 @@
 
 			for (var i = 0; i < TanLutSize; i++)
 			{
-				var angle = i.ToFP() / (TanLutSize - 1) * HalfPi;
+				var angle = FromRaw((int)((long)HalfPiRaw * i / (TanLutSize - 1)));
 
 				FCordic.SinCosZeroToHalfPi(angle.RawValue, out var sin, out var cos);
 
