@@ -88,13 +88,13 @@ namespace Fixed {
 		public static FAABB OffsetAABB(FAABB localBox, FPos origin) {
 			return new FAABB(
 				new FVector3(
-					(origin.X + localBox.LowerBound.X.To64()).ToFP32Floor(),
-					(origin.Y + localBox.LowerBound.Y.To64()).ToFP32Floor(),
-					(origin.Z + localBox.LowerBound.Z.To64()).ToFP32Floor()),
+					(origin.X + localBox.LowerBound.X.To64()).ToFP32FloorChecked(),
+					(origin.Y + localBox.LowerBound.Y.To64()).ToFP32FloorChecked(),
+					(origin.Z + localBox.LowerBound.Z.To64()).ToFP32FloorChecked()),
 				new FVector3(
-					(origin.X + localBox.UpperBound.X.To64()).ToFP32Ceil(),
-					(origin.Y + localBox.UpperBound.Y.To64()).ToFP32Ceil(),
-					(origin.Z + localBox.UpperBound.Z.To64()).ToFP32Ceil()));
+					(origin.X + localBox.UpperBound.X.To64()).ToFP32CeilChecked(),
+					(origin.Y + localBox.UpperBound.Y.To64()).ToFP32CeilChecked(),
+					(origin.Z + localBox.UpperBound.Z.To64()).ToFP32CeilChecked()));
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

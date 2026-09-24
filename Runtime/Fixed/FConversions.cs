@@ -1,4 +1,5 @@
-using System.Runtime.CompilerServices;
+	using System;
+	using System.Runtime.CompilerServices;
 using Fixed32;
 
 // ReSharper disable ShiftExpressionRightOperandNotEqualRealCount
@@ -35,6 +36,18 @@ namespace Fixed {
 #pragma warning restore CS0162 // Unreachable code detected
 		}
 
+		/// <summary>Demotes to Q16.16 and throws instead of wrapping when the value is out of range.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP To32Checked(this Fixed64.FP value)
+		{
+			var raw = value.RawValue >> (Fixed64.FP.FractionalBits - FP.FractionalBits);
+			if (raw < int.MinValue || raw > int.MaxValue)
+			{
+				throw new OverflowException("Fixed64 value is outside the Fixed32 range.");
+			}
+			return FP.FromRaw((int)raw);
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static FP ToFP32Floor(this Fixed64.FP value)
 		{
@@ -48,6 +61,18 @@ namespace Fixed {
 				return FP.FromRaw((int)(value.RawValue << (FP.FractionalBits - Fixed64.FP.FractionalBits)));
 			}
 #pragma warning restore CS0162 // Unreachable code detected
+		}
+
+		/// <summary>Rounds down to Q16.16 and throws instead of wrapping when out of range.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP ToFP32FloorChecked(this Fixed64.FP value)
+		{
+			var raw = value.RawValue >> (Fixed64.FP.FractionalBits - FP.FractionalBits);
+			if (raw < int.MinValue || raw > int.MaxValue)
+			{
+				throw new OverflowException("Fixed64 value is outside the Fixed32 range.");
+			}
+			return FP.FromRaw((int)raw);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -69,6 +94,23 @@ namespace Fixed {
 				return FP.FromRaw((int)(value.RawValue << (FP.FractionalBits - Fixed64.FP.FractionalBits)));
 			}
 #pragma warning restore CS0162 // Unreachable code detected
+		}
+
+		/// <summary>Rounds up to Q16.16 and throws instead of wrapping when out of range.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static FP ToFP32CeilChecked(this Fixed64.FP value)
+		{
+			var shift = Fixed64.FP.FractionalBits - FP.FractionalBits;
+			var raw = value.RawValue >> shift;
+			if ((value.RawValue & ((1L << shift) - 1)) != 0)
+			{
+				raw += 1;
+			}
+			if (raw < int.MinValue || raw > int.MaxValue)
+			{
+				throw new OverflowException("Fixed64 value is outside the Fixed32 range.");
+			}
+			return FP.FromRaw((int)raw);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
