@@ -55,7 +55,7 @@ namespace Fixed64 {
 		public string ToString(string format, IFormatProvider formatProvider) {
 			return string.Format("({0}, {1}, {2}, {3})", X.ToString(format, formatProvider),
 				Y.ToString(format, formatProvider), Z.ToString(format, formatProvider),
-				Y.ToString(format, formatProvider));
+				W.ToString(format, formatProvider));
 		}
 
 		public override int GetHashCode() =>
